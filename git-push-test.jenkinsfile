@@ -37,6 +37,13 @@ node {
                         git clone git@github.com:$REPORT_REPO_OWNER/jenkinsfile-tinkering.git upload-reports
                         cd upload-reports
                         git checkout $GIT_REPO_BRANCH
+                        git config --global user.name "CBCI Performance Test"
+                        git config --global user.email "team-gaia@cloudbees.com"
+                        mkdir -p reports
+                        touch reports/fake_report.pdf
+                        git add reports/*.pdf
+                        git commit -m "Archive report"
+                        git push origin $GIT_REPO_BRANCH
                     '''
                 }
             }
