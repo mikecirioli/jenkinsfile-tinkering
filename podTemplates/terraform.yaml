@@ -1,0 +1,18 @@
+kind: Pod
+spec:
+  serviceAccountName: cbci-perf-testing-infra
+  containers:
+  - name: terraform
+    image: ${IMAGE}
+    imagePullPolicy: Always
+    command:
+    - sleep
+    args:
+    - 999999
+    resources:
+      requests:
+        cpu: 1
+        memory: 2Gi
+      limits:
+        cpu: 1
+        memory: 2Gi
