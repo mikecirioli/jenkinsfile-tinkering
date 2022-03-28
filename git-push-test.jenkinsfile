@@ -21,27 +21,17 @@ properties([
     )
 ])
 
-def image = 'gcr.io/cloudbees-ops-gcr/gaia/cbci-performance-setup'
-
-podTemplate(yaml: readTrusted('podTemplates/terraform.yaml').replace('${IMAGE}', "$image")) {
-    node(POD_LABEL) {
-        ansiColor('xterm') {
-            container('terraform') {
-                stage('Publish Report') {
-                    dir("archive-reports") {
-                        sshagent(['github-ssh']) {
-                            withEnv(["REPORT_REPO_OWNER=" + params.publishRepoOwner,
-                                    "REPORT_REPO_BRANCH=" + params.publishRepoBranch]) {
-                                //sh "../scripts/archive_reports.sh -o ${REPORT_REPO_OWNER} -b ${REPORT_REPO_BRANCH}"
-                                sh '''
-                                    pwd
-                                    echo "REPORT_REPO_OWNER=${REPORT_REPO_OWNER}"
-                                    echo "REPORT_REPO_BRANCH=${REPORT_REPO_BRANCH}"
-                                '''
-                            }
-                        }
-                    }
-                }
+stage('Publish Report') {
+    dir("archive-reports") {
+        sshagent(['github-ssh']) {
+            withEnv(["REPORT_REPO_OWNER=" + params.publishRepoOwner,
+                    "REPORT_REPO_BRANCH=" + params.publishRepoBranch]) {
+                //sh "../scripts/archive_reports.sh -o ${REPORT_REPO_OWNER} -b ${REPORT_REPO_BRANCH}"
+                sh '''
+                    pwd
+                    echo "REPORT_REPO_OWNER=${REPORT_REPO_OWNER}"
+                    echo "REPORT_REPO_BRANCH=${REPORT_REPO_BRANCH}"
+                '''
             }
         }
     }
