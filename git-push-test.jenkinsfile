@@ -24,7 +24,7 @@ properties([
 node {
     stage('Publish Report') {
         dir("archive-reports") {
-            sshagent(['github-ssh']) {
+            sshagent(['cbci-perf-mike-rw']) {
                 withEnv(["REPORT_REPO_OWNER=" + params.publishRepoOwner,
                         "REPORT_REPO_BRANCH=" + params.publishRepoBranch]) {
                     //sh "../scripts/archive_reports.sh -o ${REPORT_REPO_OWNER} -b ${REPORT_REPO_BRANCH}"
