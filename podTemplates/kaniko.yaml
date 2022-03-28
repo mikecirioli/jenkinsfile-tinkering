@@ -1,0 +1,22 @@
+kind: Pod
+metadata:
+  name: kaniko
+spec:
+  serviceAccountName: ops-gcr-rw
+  containers:
+  - name: jnlp
+  - name: kaniko
+    image: gcr.io/kaniko-project/executor:debug
+    imagePullPolicy: Always
+    command:
+    - sleep
+    args:
+    - 999999
+    resources:
+      requests:
+        cpu: 1
+        memory: 3Gi
+      limits:
+        cpu: 1
+        memory: 3Gi
+
