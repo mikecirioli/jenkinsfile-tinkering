@@ -7,12 +7,12 @@ properties([
             ),
             string(
                     name: 'publishRepoOwner',
-                    defaultValue: 'cloudbees',
+                    defaultValue: 'mikecirioli',
                     description: 'When publishing the PDF report, push it to git@github.com:${archiveRepoOwner}/cbci-performance-setup.git'
             ),
             string(
                     name: 'publishRepoBranch',
-                    defaultValue: 'main',
+                    defaultValue: 'master',
                     description: 'When publishing the PDF report, push it to this branch in the repo'
             )
     ]),
@@ -32,6 +32,9 @@ node {
                         pwd
                         echo "REPORT_REPO_OWNER=${REPORT_REPO_OWNER}"
                         echo "REPORT_REPO_BRANCH=${REPORT_REPO_BRANCH}"
+                        git clone git@github.com:$GIT_REPO_OWNER/jenkinsfile-tinkering.git upload-reports
+                        cd upload-reports
+                        git checkout $GIT_REPO_BRANCH
                     '''
                 }
             }
